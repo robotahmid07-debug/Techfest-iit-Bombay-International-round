@@ -1,0 +1,104 @@
+Here is a complete, automated setup script (setup_agv.sh) that will handle everything for you: it updates your Raspberry Pi 5, installs all required Python and system libraries (OpenCV, pyserial, numpy, RPi.GPIO), enables the hardware UART serial port, creates your project folder, and sets up a background service so your car starts automatically the exact second the Pi boots up.   
+main_vision.py
+
+Step 1: Create the Automated Setup Script
+On your Raspberry Pi 5, open a terminal and create a new script file:
+
+Bash
+
+
+nano setup_agv.sh
+Paste the following complete bash script into the file:
+
+Bash
+
+
+#!/bin/bash
+# ==============================================================================
+# AGV Automated Installer & Auto-Start Configurator for Raspberry Pi 5
+# ==============================================================================
+
+echo "=== [1/5] Updating System Packages & Installing Dependencies ==="
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3-pip python3-opencv python3-serial python3-numpy python3-rpi.gpio
+
+echo "=== [2/5] Enabling Hardware UART (GPIO 14 & 15) ==="
+CONFIG_FILE="/boot/firmware/config.txt"
+if [ ! -f "$CONFIG_FILE" ]; then
+    CONFIG_FILE="/boot/config.txt"
+fi
+
+if grep -q "dtparam=uart0=on" "$CONFIG_FILE"; then
+    echo "UART0 is already enabled."
+else
+    echo "dtparam=uart0=on" | sudo tee -a "$CONFIG_FILE"
+    echo "UART0 added to $CONFIG_FILE"
+fi
+
+echo "=== [3/5] Creating Project Directory ==="
+PROJECT_DIR="/home/pi/agv_project"
+mkdir -p "$PROJECT_DIR"
+chown -R pi:pi "$PROJECT_DIR"
+
+echo "=== [4/5] Creating Systemd Service for Auto-Start ==="
+SERVICE_FILE="/etc/systemd/system/agv.service"
+sudo bash -c "cat > $SERVICE_FILE" <<EOF
+[Unit]
+Description=AGV Autonomous Vision Control Service
+After=multi-user.target serial-getty@ttyAMA0.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=$PROJECT_DIR
+ExecStart=/usr/bin/python3 $PROJECT_DIR/main_vision.py --port /dev/ttyAMA0 --baud 115200
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+echo "=== [5/5] Registering & Enabling the Auto-Start Service ==="
+sudo systemctl daemon-reload
+sudo systemctl enable agv.service
+
+echo ""
+echo "===================================================================="
+echo " Setup complete successfully!"
+echo " Next step: Place your 'main_vision.py' file inside: $PROJECT_DIR"
+echo " Then reboot your Raspberry Pi 5 using: sudo reboot"
+echo "===================================================================="
+Save and exit the editor by pressing Ctrl + O, then Enter, and Ctrl + X.
+
+Step 2: Run the Installer Script
+Make the installer script executable and run it with root privileges:
+
+Bash
+
+
+chmod +x setup_agv.sh
+sudo ./setup_agv.sh
+Step 3: Put Your Code in Place
+Make sure your finalized vision script is named main_vision.py and placed inside the project folder created by the script:
+
+Bash
+
+
+nano /home/pi/agv_project/main_vision.py
+(Paste your python code here, save, and exit).
+
+Step 4: Reboot and Let It Run!
+Reboot your Raspberry Pi 5:
+
+Bash
+
+
+sudo reboot
+What Happens Next?
+The Pi 5 powers on and boots up.
+
+The agv.service background script launches automatically.   
+main_vision.py
+
+It opens communication with your ESP32-S3 over /dev/ttyAMA0 at 115200 baud, reads the camera feed, executes your PD lane-keeping and traffic-light algorithms, and runs your car entirely on its own with zero laptop or manual terminal initialization required!   
