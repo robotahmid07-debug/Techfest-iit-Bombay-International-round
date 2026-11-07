@@ -1,1 +1,17 @@
 Uplaod codes here
+uplado the pins hereComponent	Signal	GPIO
+L298N	ENA	25
+	IN1	26
+	IN2	27
+	IN3	14
+	IN4	23
+	ENB	13
+Left ultrasonic	TRIG	16
+	ECHO	32
+Middle ultrasonic	TRIG	18
+	ECHO	34
+Right ultrasonic	TRIG	22
+	ECHO	33
+Steering servo	PWM	21
+Raspberry Pi UART2	ESP32 RX	19
+	ESP32 TX	17
