@@ -34,20 +34,20 @@
 
 // ============================== CONFIG ====================================
 // ---- Ultrasonic pins (index order = SensorId) ----
-static const uint8_t PIN_TRIG[5] = {4, 5, 6, 7, 15};
-static const uint8_t PIN_ECHO[5] = {16, 8, 9, 10, 11};
+static const uint8_t PIN_TRIG[5] = {4, 13, 14, 16, 17};
+static const uint8_t PIN_ECHO[5] = {34, 35, 36, 39, 33};
 enum SensorId : uint8_t { S_LEFT = 0, S_FRONT_LEFT, S_FRONT_CENTER, S_FRONT_RIGHT, S_RIGHT, S_COUNT };
 static const uint8_t SCHEDULE[S_COUNT] = {S_FRONT_LEFT, S_FRONT_CENTER, S_FRONT_RIGHT, S_LEFT, S_RIGHT};
 
 // ---- L298N pins (ASSUMED): drive motors only. Both channels get the SAME command (rear axle). ----
-static const uint8_t PIN_ENA = 12, PIN_IN1 = 13, PIN_IN2 = 14;   // rear-left drive motor
-static const uint8_t PIN_ENB = 21, PIN_IN3 = 47, PIN_IN4 = 42;   // rear-right drive motor
+static const uint8_t PIN_ENA = 18, PIN_IN1 = 19, PIN_IN2 = 21;   // rear-left drive motor
+static const uint8_t PIN_ENB = 22, PIN_IN3 = 23, PIN_IN4 = 25;   // rear-right drive motor
 
 // ---- Ackermann steering servo (ASSUMED pin) ----
-static const uint8_t PIN_SERVO = 1;
+static const uint8_t PIN_SERVO = 26;
 
 // ---- UART link to Pi ----
-static const uint8_t  PIN_LINK_RX = 18, PIN_LINK_TX = 17;
+static const uint8_t  PIN_LINK_RX = 27, PIN_LINK_TX = 32;
 static const uint32_t LINK_BAUD = 115200;
 HardwareSerial LinkSerial(2);
 
