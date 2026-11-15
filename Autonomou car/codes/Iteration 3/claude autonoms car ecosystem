@@ -1,0 +1,64 @@
+I rewrote agv.sh for your simpler workflow: you flash the Nano with the Arduino IDE, and everything on the Pi runs from icons you double-click in the Pi Connect screen share. I tested the download, update, shortcut and command-building logic against a fake repo that copies your folder layout. I could not test the apt install, the camera and Nano checks, the GUI window or the desktop icons on a real Pi, so expect to fix small things on first run.
+
+What’s in your repo right now
+
+Your Iteration 3 folder has only a readme file, so there is nothing to download yet. The script knows this and tells you what to upload.
+
+Step 1: upload to GitHub
+
+Upload these three files to your Autonomou car/codes/Iteration 3 folder (Add file → Upload files):
+
+main_vision.py
+agv.sh
+nano_motor_safety.ino (kept as a backup; the Pi ignores it)
+Step 2: flash the Nano (Arduino IDE on your laptop)
+Open nano_motor_safety.ino.
+Set Board to Arduino Nano.
+Set Processor to ATmega328P (Old Bootloader). Most clone Nanos need this, and if the upload fails, try the other option.
+Pick the Port and press Upload.
+Open the Serial Monitor at 115200. You should see about 20 lines a second like $TEL,….
+Step 3: install on the Pi (one time)
+
+In Pi Connect, use Remote shell, which gives you a normal terminal where pasting works. The Pi needs internet for this step.
+
+bash
+curl -fsSLo agv.sh "https://raw.githubusercontent.com/robotahmid07-debug/Techfest-iit-Bombay-International-round/main/Autonomou%20car/codes/Iteration%203/agv.sh"
+bash agv.sh install
+
+It installs OpenCV, pyserial, numpy and the other tools, and downloads only your Iteration 3 folder. It then puts four icons on the Pi desktop and creates the agv command. If it asks you to reboot, do so once.
+
+Step 4: daily use (Pi Connect, Screen sharing)
+
+Double-click these icons on the Pi desktop. The first click may ask “Execute?”, so choose Execute.
+
+Icon	What it does
+AGV 1 – Check hardware	Tests the Python libraries, the camera (is it reaching 30 fps?), the Nano and sonar, and the display.
+AGV 2 – Run + tune	Pulls the newest code, then opens the tuning window in HOLD. Press SPACE to drive, s to save, q to quit.
+AGV 3 – RACE	Runs the saved copy with no update and no HOLD, so it drives immediately.
+AGV – Update	Downloads the latest code from GitHub.
+
+Your tuning (tuning.json) and logs live in ~/agv-car/data, so an update never overwrites them. If the Pi is offline, it runs the last downloaded copy.
+
+Changing code later
+Python: upload the new main_vision.py to the GitHub folder, then double-click Run. It updates itself first.
+Nano: change the sketch, upload it with the Arduino IDE, and plug it back into the Pi. Run Check hardware afterwards.
+Before the competition: do one final Update while you have internet, then use RACE (or agv run --no-update) so the code can’t change mid-event.
+Pi Connect on a Pi with no monitor
+
+Screen sharing needs a running desktop session. On a headless Pi:
+
+Run sudo raspi-config.
+Under System → Boot / Auto Login, choose Desktop Autologin.
+Under Display → Resolution, set a headless resolution (or plug in a cheap HDMI dummy plug).
+
+If you start the program from the Remote shell terminal instead, it still opens its window on the shared desktop.
+
+If something goes wrong
+Symptom	Fix
+“main_vision.py is not in your GitHub folder”	Upload it to Iteration 3, then run Update.
+“no Nano on USB”	Use a data cable (not charge-only) or try the other USB port.
+“Nano does not answer”	Re-upload the sketch, and try the other bootloader option.
+Sonar flagged stale	Check Trig on D4, Echo on D2, and 5 V and GND.
+“already running”	Close the other window first.
+
+The next step I’d take is to put the car on a stand, run Check hardware, and then do the servo, motor and vision calibration from the earlier steps.
