@@ -17,7 +17,7 @@ Here you will get 3 compection segments.
 
 
 
-
+Visit this gogo doc https://docs.google.com/document/d/1fWSwwo29SyHVvzk1YCl1_Z4mX5DQHCqMF0BlSIgAuaI/edit?tab=t.hwzneriwuqh8
 
 
 The firs 2 segments are for documentations purposes only and the 3rd part the autonomosu car segment is for showing Commits and desigs and engenerring thigs,
