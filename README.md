@@ -23,7 +23,8 @@ Visit this gogo doc https://docs.google.com/document/d/1fWSwwo29SyHVvzk1YCl1_Z4m
 The firs 2 segments are for documentations purposes only and the 3rd part the autonomosu car segment is for showing Commits and desigs and engenerring thigs,
 as well as documentation purposes
 
-
+#########Look the puspose fo this Reposity is to store codes,plans,And resuts an achievemts in it for this comepction
+and the "Achievements repository will only hold the achieventns not the codes"  so altough you will put achievmets phoot in this repository must also put achievmets photo in this repository too(https://github.com/robotahmid07-debug/My-Achievements/tree/main/Techfest%20IIt%20Bombay%20bangladesh%20zonal%20in%20duet/International%20round)
 
 
 
