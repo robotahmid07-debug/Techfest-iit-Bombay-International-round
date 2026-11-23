@@ -1,8 +1,12 @@
-Her you will get 3 compection segments.
-1.zero code
-2.India 70/100
-3.The Urban Autonomous Mobility Challenge (UAMC)
-
+The international round segments here in this repository cheack the techfest fodler from achievements repository for national round resusts.In thsi repository international round comepction written
+Here you will get 3 compection segments.
+1.zero code(Proority 2)
+2.Meshmarize(Priority 3)
+3.The Urban Autonomous Mobility Challenge (UAMC)(Priority 4)
+4.Roboreach
+5.National SparkX ai challange(Priority 1)
+6.Roboscooccer
+7.Aero-modelling
 
 
 
